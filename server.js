@@ -3,8 +3,11 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const massive = require('massive')
+
 require('dotenv').config();
+
 const app = express();
+
 massive(process.env.CONNECTION_STRING)
     .then((db)=>{
         console.log('the server is sawing logs');
