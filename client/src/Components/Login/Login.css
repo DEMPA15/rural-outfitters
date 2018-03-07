@@ -1,0 +1,46 @@
+.login-form {
+    border: 1px solid grey;
+    height: 350px;
+    box-sizing: border-box;
+    width: 30px;
+    min-width: 350px;
+    text-align: center;
+    margin: auto;
+    padding-top: 25px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.login-form div {
+    width: 70%;
+    margin: auto;
+    text-align: left;
+}
+.login-form div >input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.login-form label {
+    font-size:10px;
+}
+
+.login-form button {
+    margin-top: 10px;
+    width:70%;
+    border: solid 1px black;
+    background: black;
+    color: white;
+    padding: 10px;
+}
+
+.login-form hr {
+    width: 70%;
+    border: none;
+    height: .5px;
+    background: grey;
+}
+.login-form .sign-up-button{
+    width: 70%;
+    background: white;
+    color: black;
+}
