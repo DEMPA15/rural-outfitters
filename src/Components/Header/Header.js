@@ -22,7 +22,9 @@ class Header extends Component {
         }
         return (
             <div className="Header">
+                <Link to="/market">
                 RURAL OUTFITTERS
+                </Link>
             </div>
         )
     }
