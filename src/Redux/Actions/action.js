@@ -8,15 +8,16 @@ export function AddToBasket(bool){
     }
 }
 export function GetProducts(){
-   const payload = axios.get('/api/getProducts');
+   const payload = axios.get('/api/items');
     return {
-        type: ADD_TO_BASKET,
+        type: GET_PRODUCTS,
         payload
     }
 }
 export function GetProduct(item){
+    localStorage.setItem("lastProduct", JSON.stringify(item));
     return {
-        type: ADD_TO_BASKET,
+        type: GET_PRODUCT,
         payload: item
     }
 }

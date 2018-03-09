@@ -4,7 +4,12 @@
 .App {
   text-align: center;
 }
+.item-image{
+  width: 50px;
+  height: 50px;
+  background-size: cover;
 
+}
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;

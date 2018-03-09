@@ -9,9 +9,13 @@ class Details extends Component {
     render(){
         return (
             <div>
-               <Header/> 
+               <Header showCart={true}/> 
                 <div>
-                    
+                    <h1>{this.props.product.name}</h1>
+                    <div className="item-image" style={{backgroundImage: `url("${this.props.product.img}")`}}/>  
+                    <p>{this.props.product.price}</p>                  
+                    <p>{this.props.product.description}</p>
+                    <p>{this.props.product.specs}</p>
                 </div>
             </div>
         )

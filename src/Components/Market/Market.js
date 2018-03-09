@@ -7,30 +7,54 @@ import Header from '../Header/Header'
 import{Link} from 'react-router-dom';
 
 class Market extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            isLoaded: false,
+        }
+    }
+    componentDidMount(){
+        this.props.GetProducts()
+        .then(()=>{
+            this.setState({
+                isLoaded:true,
+            });
+        })
+    }
     render(){
         const items = this.props.products.map((product)=>{
             return ( 
-            <div className="item-container">
+            <div className="item-container" key={product.product_id}>
                 <Link to="/details">
-                    <div style={{backgroundImage: "url(" + product.imageUrl+ ")"}}/>
-                    <p>{product.price}</p>
-                    <p>{product.description}</p>
+                    <div onClick={ ()=>{this.props.GetProduct(product)}}>
+                        <div className="item-image" style={{backgroundImage: "url(" + product.img+ ")"}}/>
+                        <p>{product.price}</p>
+                        <p>{product.description}</p>
+                    </div>
                 </Link>
                 <button>ADD TO CART</button>
             </div> 
             )
         })
-        return (
-            <div>
-                <Header showCart={true}/>
-                <div className="market-container">
-                    <h1>Market</h1>
-                    <div className="itemContainer">
-                    {items} 
+        if(this.state.isLoaded){
+            return (
+                <div>
+                    <Header showCart={true}/>
+                    <div className="market-container">
+                        <h1>Market</h1>
+                        <div className="itemContainer">
+                        {items} 
+                        </div>
                     </div>
                 </div>
-            </div>
-        )
+            )
+        }else{
+            return(<div>
+                <Header showCart={true}/>
+               <div className="loading">Loading...</div> 
+                
+                </div>);
+        }
     }
 }
 // export default Market;
