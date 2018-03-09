@@ -9,7 +9,9 @@ class Header extends Component {
         if(this.props.showCart){
             return (
                 <div className="Header">
+                <Link to='/market'>
                     RURAL OUTFITTERS
+                    </Link>
                     <Link to={'/basket'}>
                         <div className="shoppingBag" style={{backgroundImage: "url(" + shoppingCart+ ")"}}>
                             <div className="shoppingDate">
@@ -18,7 +20,7 @@ class Header extends Component {
                         </div>
                     </Link>
                 </div>
-            ) 
+            )
         }
         return (
             <div className="Header">
@@ -30,5 +32,5 @@ class Header extends Component {
 function mapStateToProps({basket}){
 	return {basket};
 }
-  
+
 export default connect(mapStateToProps)(Header);
