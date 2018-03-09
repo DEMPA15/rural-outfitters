@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Login.css'
 import Header from '../Header/Header'
+import {Link} from 'react-router-dom'
 
 class Login extends Component {
     render(){
@@ -24,7 +25,9 @@ class Login extends Component {
                         <button type="submit">Sign In</button>
                         <hr/>
                     </form>
-                    <button className="sign-up-button">Create An Account</button>
+                    <Link to={`/market`}>
+                        <button className="sign-up-button">Create An Account</button>
+                    </Link>
                 </div>
             </div>
         )
