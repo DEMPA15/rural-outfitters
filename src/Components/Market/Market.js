@@ -27,9 +27,12 @@ class Market extends Component {
             <div className="item-container" key={product.product_id}>
                 <Link to="/details">
                     <div onClick={ ()=>{this.props.GetProduct(product)}}>
-                        <div className="item-image" style={{backgroundImage: "url(" + product.img+ ")"}}/>
-                        <p>{product.price}</p>
-                        <p>{product.description}</p>
+                        <p className='name'>{product.name}</p>
+                        <div className="item-image" 
+                            // style={{backgroundImage: "url(" + product.img+ ")"}}
+                        />
+                        <p className='price'>${product.price}</p>
+                        <p className='description'>{product.description}</p>
                     </div>
                 </Link>
                 <button>ADD TO CART</button>
@@ -41,10 +44,10 @@ class Market extends Component {
                 <div>
                     <Header showCart={true}/>
                     <div className="market-container">
-                        <h1>Market</h1>
-                        <div className="itemContainer">
+                        <h1>The Market</h1>
+                        
                         {items} 
-                        </div>
+                        
                     </div>
                 </div>
             )
