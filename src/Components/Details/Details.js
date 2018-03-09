@@ -10,7 +10,9 @@ class Details extends Component {
         return (
             <div>
                <Header/> 
-                Detail
+                <div>
+                    
+                </div>
             </div>
         )
     }

@@ -1,0 +1,32 @@
+.Header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: black;
+    padding: 10px;
+    padding-left: 15px;
+    background: white;
+    border-bottom: solid 1px black;
+    margin-bottom: 30px;
+}
+.shoppingBag{
+    width: 25px;
+    height: 25px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-right: 20px;
+    position: relative;
+}
+
+.shoppingBag:hover{
+    cursor: pointer;
+}
+.shoppingDate {
+    font-size: 10px;
+    position: absolute;
+    width: 100%;
+    top: 35%;
+    left: 0%;
+    right: 39%;
+    text-align: center;
+}
