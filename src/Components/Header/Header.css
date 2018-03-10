@@ -30,3 +30,10 @@
     right: 39%;
     text-align: center;
 }
+a{
+    text-decoration: none;
+}
+.homeButton{
+    color: black;
+
+}
