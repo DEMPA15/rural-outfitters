@@ -1,0 +1,29 @@
+
+.productItem {
+    font-size: 20px;
+    display: inline-block;
+    width: 204px;
+    vertical-align: top;
+    box-sizing: border-box;
+    margin: 0 0 0 5px;
+    text-align: right;
+
+}
+
+.itemPrice {
+    font-size: 100px;
+    font-weight: bold;
+    font-family: "Open Sans Condensed", sans-serif;
+    color: #333;
+}
+
+.imageBlock {
+    font-size: 12px;
+    display: inline-block;
+    width:200px;
+    vertical-align: top;
+    box-sizing: border-box;
+    margin: 0 5px 0 10px;
+    padding-top: 3px;
+    text-align: center;
+}
