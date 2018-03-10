@@ -3,6 +3,8 @@
 }
 
 .market-container {
+    height: 100%;
+    width: 100%;
     text-align: center;
     display: flex;
     margin: 0;
@@ -10,7 +12,8 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    background: no-repeat fixed url('http://auctionfire.com/wp-content/uploads/2017/11/52afd056-01ab-11e2-8aaa-00144feabdc0.jpg')
+    background: no-repeat fixed url('http://auctionfire.com/wp-content/uploads/2017/11/52afd056-01ab-11e2-8aaa-00144feabdc0.jpg');
+   
 }
 
 .market-container h1 {
@@ -30,8 +33,8 @@
     justify-content: center;
     margin: 35px;
     background-color: rgba(233, 230, 230, 0.8);
-    height: 460px;
-    width: 530px;
+    height: 350px;
+    width: 380px;
     font-size: 1.4em;
     
 }
@@ -43,35 +46,39 @@
 .item-container .price, .name{
     font-weight: bold;
     margin-bottom: 0;
-    margin-top: 7px;
-    font-size: 1.4em;
+    /* margin-top: 7px; */
+    font-size: .9em;
 }
 
 .item-container .name{
-    font-size: 1.7em;
+    font-size: 1.2em;
     letter-spacing: .1em;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
     margin-top: 5px;
 }
 
 .item-container .description{
     margin-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    font-size: .8em;
 }
 
-.item-container button{
-    padding: 12px;
+.addToBasket-Button{
+    padding: 10px;
     border-radius: 5px;
     font-weight: bold;
-    font-size: .8em;
+    font-size: .7em;
     background-color: rgb(127, 175, 108);
 }
 
 .item-image{
-    height: 200px;
-    width: 200px;
-    margin: 10px;
-    background-image: url('https://vignette.wikia.nocookie.net/stranded-deep/images/0/01/Hoe_Crude_Icon.png/revision/latest?cb=20171001235136')
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 150px;
+    width: 230px;
+    margin-bottom: 0px;
+    /* background-image: url('https://vignette.wikia.nocookie.net/stranded-deep/images/0/01/Hoe_Crude_Icon.png/revision/latest?cb=20171001235136') */
 }
 
 

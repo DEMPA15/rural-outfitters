@@ -29,13 +29,13 @@ class Market extends Component {
                     <div onClick={ ()=>{this.props.GetProduct(product)}}>
                         <p className='name'>{product.name}</p>
                         <div className="item-image" 
-                            // style={{backgroundImage: "url(" + product.img+ ")"}}
+                            style={{backgroundImage: "url(" + product.img+ ")"}}
                         />
                         <p className='price'>${product.price}</p>
                         <p className='description'>{product.description}</p>
                     </div>
                 </Link>
-                <button>ADD TO CART</button>
+                <button className='addToBasket-Button'>ADD TO BASKET</button>
             </div> 
             )
         })
