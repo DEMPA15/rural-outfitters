@@ -8,14 +8,14 @@ import './Details.css'
 class Details extends Component {
     render(){
         return (
-            <div>
+            <div id = 'detailsPage'>
                <Header showCart={true}/> 
-                <div>
-                    <h1>{this.props.product.name}</h1>
+                <div id = "detailsInfo">
+                    <h1 id = 'productName'>{this.props.product.name}</h1>
                     <div className="item-image" style={{backgroundImage: `url("${this.props.product.img}")`}}/>  
-                    <p>{this.props.product.price}</p>                  
-                    <p>{this.props.product.description}</p>
-                    <p>{this.props.product.specs}</p>
+                    <p id = 'price'>{this.props.product.price}</p>                  
+                    <p id = 'description'>{this.props.product.description}</p>
+                    <p id = 'specs'>{this.props.product.specs}</p>
                 </div>
             </div>
         )

@@ -1,0 +1,13 @@
+div#detailsInfo {
+  text-align: center;
+}
+
+.item-image {
+  height: 300px;
+  margin: auto;
+  width: 300px;
+}
+
+h1#productName {
+  font-size: 63px;
+}
