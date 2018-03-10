@@ -1,17 +1,22 @@
 .market-container {
     text-align: center;
     background-color: #f7f8f8;
+    
 
 }
 .market-container h1 {
     color: #0f152a;
     font-family: Arial, Helvetica, sans-serif;
 
+    
+
+
 }
 
 .item-container {
     background: #0f152a;
     margin-bottom: 10px;
+    
 }
 
 
@@ -31,4 +36,8 @@ button {
     width: 100px;
     margin-bottom: 12px;
 
+}
+
+.item-image {
+    
 }
