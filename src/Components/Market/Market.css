@@ -82,5 +82,6 @@
     margin-bottom: 0px;
     /* background-image: url('https://vignette.wikia.nocookie.net/stranded-deep/images/0/01/Hoe_Crude_Icon.png/revision/latest?cb=20171001235136') */
 }
-
-
+.productInfo-div {
+    width: 25%;
+}

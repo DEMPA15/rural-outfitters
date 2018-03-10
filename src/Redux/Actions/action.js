@@ -33,3 +33,6 @@ export function getProduct(item){
         payload: item
     }
 }
+export function getBasket(){
+   return axios.get(`/api/basket`);
+}
