@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import Header from '../Header/Header'
 import './Basket.css';
-import {GetBasket} from '../../Redux/Actions/action';
-
+import {getBasket, deleteFromBasket} from '../../Redux/Actions/action';
+import Loading from '../Loading/Loading';
+import { connect } from 'react-redux';
+import { bindActionCreators} from 'redux';
 class Basket extends Component {
     constructor(props){
         super(props);
@@ -10,9 +12,10 @@ class Basket extends Component {
             isLoaded: false,
             items: [],
         }
+        this.removeItem =this.removeItem.bind(this);
     }
     componentDidMount(){
-        GetBasket()
+        getBasket()
             .then(items => {
                items.data.isLoaded = true;
                this.setState({
@@ -21,24 +24,37 @@ class Basket extends Component {
                }) 
             })
     }
+    removeItem(productId){
+        this.props.deleteFromBasket(productId)
+            .then(()=>{
+                getBasket()
+                .then(items => {
+                   items.data.isLoaded = true;
+                   this.setState({
+                       isLoaded: true,
+                       items: items.data
+                   }) 
+                })
+            })
+    }
     render(){
         let total = this.state.items.reduce((sum,item) =>{
-            sum += item.price
-        }, 0)
+           return sum += (item.product.price * item.quantity);
+        }, 0).toFixed(2);
         let basketItems = this.state.items.map(item => {
             return(
-            <div className = 'productInfo'>
+            <div className = 'productInfo' key={item.product.product_id}>
             <div className = 'img-div'>
-                <div className="basket-image" style={{backgroundImage: `url("${item.img}")`}}/>
+                <div className="basket-image" style={{backgroundImage: `url("${item.product.img}")`}}/>
             </div>
             <div className = 'productInfo-div'>
-                <h3 className = 'productName'>{item.name}</h3>
-                <p className ='details'>{item.description}</p>
-                <button className = 'remove-btn'>Remove</button>
+                <h3 className = 'productName'>{item.product.name}</h3>
+                <p className ='details'>{item.product.description}</p>
+                <button className = 'remove-btn' onClick= {()=>{this.removeItem(item.product.product_id)}}>Remove Item</button>
             </div>
             <div className = 'price-div'>
                 <h3 className = 'price'>Price</h3>
-                <p>{item.price}</p>
+                <p>{item.product.price}</p>
             </div>
             <div className = 'quantity-div'>
                 <h3 className = 'quantity'>Quantity</h3>
@@ -67,9 +83,14 @@ class Basket extends Component {
             return(
             <div>
             <Header showCart={true}/>
-            <div>Loading...</div>
+            <Loading/>
             </div>
             )}
     }
 }
-export default Basket;
+
+function mapDispatchToProps(dispatch){
+	return bindActionCreators({deleteFromBasket}, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(Basket);

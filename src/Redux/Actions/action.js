@@ -1,4 +1,4 @@
-import {GET_PRODUCT, GET_PRODUCTS, ADD_TO_BASKET, DELETE_FROM_BASKET} from '../Actions/constraints';
+import {GET_PRODUCT, GET_PRODUCTS, ADD_TO_BASKET, DELETE_FROM_BASKET, GET_BASKET_COUNT} from '../Actions/constraints';
 import axios from 'axios'
 
 export function addToBasket(productId){
@@ -10,8 +10,17 @@ export function addToBasket(productId){
     }
 }
 
+export function getBasketCount(){
+    const payload = axios.get('/api/basket-count')
+        .then(({ data }) => data)
+    return {
+        type: GET_BASKET_COUNT,
+        payload,
+    }
+}
+
 export function deleteFromBasket(productId){
-    const payload = axios.delete(`/api/basket`, { productId })
+    const payload = axios.delete(`/api/basket/${productId}`)
         .then(({ data }) => data)
     return {
         type: DELETE_FROM_BASKET,

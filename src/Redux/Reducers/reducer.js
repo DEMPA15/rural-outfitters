@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import {GET_PRODUCT, GET_PRODUCTS, ADD_TO_BASKET, DELETE_FROM_BASKET} from '../Actions/constraints';
+import {GET_PRODUCT, GET_PRODUCTS, ADD_TO_BASKET, DELETE_FROM_BASKET, GET_BASKET_COUNT} from '../Actions/constraints';
 import { AddToBasket } from '../Actions/action';
 let lastProduct = JSON.parse(localStorage.getItem('lastProduct')) || {};
 
@@ -8,15 +8,21 @@ function basket (state = 0, action){
         case `${ADD_TO_BASKET}_PENDING` :
             return state;
         case `${ADD_TO_BASKET}_FULFILLED` :
-            return state
+            return state = action.payload.count;
         case `${ADD_TO_BASKET}_REJECTED` :
-            return state = state + 1;
+            return state;
         case `${DELETE_FROM_BASKET}_PENDING` :
             return state;
         case `${DELETE_FROM_BASKET}_FULFILLED` :
-            return state;
+            return state = action.payload.count;
         case `${DELETE_FROM_BASKET}_REJECTED` :
-            return state = state -1;
+            return state;
+        case `${GET_BASKET_COUNT}_PENDING` :
+            return state;
+        case `${GET_BASKET_COUNT}_FULFILLED` :
+            return state = action.payload.count;
+        case `${GET_BASKET_COUNT}_REJECTED` :
+            return state;
         default:
             return state;
     }
@@ -41,6 +47,7 @@ function product  (state = lastProduct, action){
             return state;
     }
 }
+
 
 const rootReducer = combineReducers({basket, product, products});
 

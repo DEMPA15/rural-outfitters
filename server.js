@@ -157,8 +157,8 @@ app.post('/api/basket', (req, res) => {
         .catch(handleDbError(res));
 });
 
-app.delete('/api/basket', (req, res) => {
-    const { productId } = req.body;
+app.delete('/api/basket/:productId', (req, res) => {
+    const { productId } = req.params;
     
     const userId = 1;
     
