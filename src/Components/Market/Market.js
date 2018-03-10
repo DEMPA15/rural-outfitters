@@ -6,6 +6,8 @@ import {GetProducts, GetProduct} from '../../Redux/Actions/action';
 import Header from '../Header/Header';
 import{Link} from 'react-router-dom';
 import Loading from '../Loading/Loading';
+import AddToBasket from '../Common/AddToBasket';
+import DeleteFromBasket from '../Common/DeleteFromBasket';
 
 class Market extends Component {
     constructor(props){
@@ -15,7 +17,7 @@ class Market extends Component {
         }
     }
     componentDidMount(){
-        this.props.GetProducts()
+        this.props.getProducts()
         .then(()=>{
             this.setState({
                 isLoaded:true,
@@ -24,7 +26,7 @@ class Market extends Component {
     }
     render(){
         const items = this.props.products.map((product)=>{
-            return ( 
+            return (
             <div className="item-container" key={product.product_id}>
                 <Link to="/details">
                     <div onClick={ ()=>{this.props.GetProduct(product)}}>
@@ -36,8 +38,11 @@ class Market extends Component {
                         <p className='description'>{product.description}</p>
                     </div>
                 </Link>
-                <button className='addToBasket-Button'>ADD TO BASKET</button>
+                <AddToBasket productId = {product.product_id} />
+                <DeleteFromBasket productId = {product.product_id} />
             </div> 
+
+
             )
         })
         if(this.state.isLoaded){
@@ -64,7 +69,7 @@ function mapStateToProps({products}){
 	return {products};
 }
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({GetProducts, GetProduct}, dispatch);
+	return bindActionCreators({getProducts, getProduct}, dispatch);
 }
-  
+
 export default connect(mapStateToProps, mapDispatchToProps)(Market);
