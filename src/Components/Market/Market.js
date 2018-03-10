@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import './Market.css'
 import { connect } from 'react-redux';
 import { bindActionCreators} from 'redux';
-import {GetProducts, GetProduct} from '../../Redux/Actions/action';
-import Header from '../Header/Header'
+import {getProducts, getProduct} from '../../Redux/Actions/action';
+import Header from '../Header/Header';
 import{Link} from 'react-router-dom';
+import Loading from '../Loading/Loading';
+import AddToBasket from '../Common/AddToBasket';
+import DeleteFromBasket from '../Common/DeleteFromBasket';
 
 class Market extends Component {
     constructor(props){
@@ -14,7 +17,7 @@ class Market extends Component {
         }
     }
     componentDidMount(){
-        this.props.GetProducts()
+        this.props.getProducts()
         .then(()=>{
             this.setState({
                 isLoaded:true,
@@ -23,17 +26,22 @@ class Market extends Component {
     }
     render(){
         const items = this.props.products.map((product)=>{
-            return ( 
+            return (
             <div className="item-container" key={product.product_id}>
                 <Link to="/details">
-                    <div onClick={ ()=>{this.props.GetProduct(product)}}>
-                        <div className="item-image" style={{backgroundImage: "url(" + product.img+ ")"}}/>
-                        <p>{product.price}</p>
-                        <p>{product.description}</p>
+                    <div onClick={ ()=>{this.props.getProduct(product)}}>
+                        <p className='name'>{product.name}</p>
+                        <div className="item-image" 
+                            style={{backgroundImage: "url(" + product.img+ ")"}}
+                        />
+                        <p className='price'>${product.price}</p>
+                        <p className='description'>{product.description}</p>
                     </div>
                 </Link>
-                <button>ADD TO CART</button>
+                <AddToBasket productId = {product.product_id} />
             </div> 
+
+
             )
         })
         if(this.state.isLoaded){
@@ -41,28 +49,26 @@ class Market extends Component {
                 <div>
                     <Header showCart={true}/>
                     <div className="market-container">
-                        <h1>Market</h1>
-                        <div className="itemContainer">
+                        <h1 className='market-title'>The Market</h1>
+                        
                         {items} 
-                        </div>
+                        
                     </div>
                 </div>
             )
         }else{
             return(<div>
                 <Header showCart={true}/>
-               <div className="loading">Loading...</div> 
-                
+                   <Loading/>
                 </div>);
         }
     }
 }
-// export default Market;
 function mapStateToProps({products}){
 	return {products};
 }
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({GetProducts, GetProduct}, dispatch);
+	return bindActionCreators({getProducts, getProduct}, dispatch);
 }
-  
+
 export default connect(mapStateToProps, mapDispatchToProps)(Market);

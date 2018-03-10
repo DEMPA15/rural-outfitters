@@ -1,9 +1,86 @@
-.market-container {
-    text-align: center;
+*{
+    box-sizing: border-box;
 }
-.market-container h1 {
-    color: grey;
+
+.market-container {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    margin: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    background: no-repeat fixed url('http://auctionfire.com/wp-content/uploads/2017/11/52afd056-01ab-11e2-8aaa-00144feabdc0.jpg');
+   
+}
+
+.market-title {
+    display: flex;
+    color: black;
     font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 15px;
+    letter-spacing: .15em;
+    width: 100%;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 4.3em;
+}
+
+.item-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 35px;
+    background-color: rgba(233, 230, 230, 0.8);
+    height: 350px;
+    width: 380px;
+    font-size: 1.4em;
+    
+}
+
+.item-container a{
+    color: black;
+}
+
+.item-container .price, .name{
+    font-weight: bold;
+    margin-bottom: 0;
+    /* margin-top: 7px; */
+    font-size: .9em;
+}
+
+.item-container .name{
+    font-size: 1.2em;
+    letter-spacing: .1em;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+.item-container .description{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: .8em;
+}
+
+.addToBasket-Button{
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: .7em;
+    background-color: rgb(127, 175, 108);
+}
+
+.item-image{
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 150px;
+    width: 230px;
+    margin-bottom: 0px;
+    /* background-image: url('https://vignette.wikia.nocookie.net/stranded-deep/images/0/01/Hoe_Crude_Icon.png/revision/latest?cb=20171001235136') */
 }
 .productInfo-div {
     width: 25%;

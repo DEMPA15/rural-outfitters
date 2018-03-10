@@ -1,15 +1,22 @@
 import { combineReducers } from 'redux';
-import {GET_PRODUCT, GET_PRODUCTS, ADD_TO_BASKET} from '../Actions/constraints';
+import {GET_PRODUCT, GET_PRODUCTS, ADD_TO_BASKET, DELETE_FROM_BASKET} from '../Actions/constraints';
+import { AddToBasket } from '../Actions/action';
 let lastProduct = JSON.parse(localStorage.getItem('lastProduct')) || {};
 
 function basket (state = 0, action){
     switch(action.type){
-        case ADD_TO_BASKET :
-            if(action.payload){
-                return state + 1
-            }else{
-                return state - 1
-            }
+        case `${ADD_TO_BASKET}_PENDING` :
+            return state;
+        case `${ADD_TO_BASKET}_FULFILLED` :
+            return state
+        case `${ADD_TO_BASKET}_REJECTED` :
+            return state = state + 1;
+        case `${DELETE_FROM_BASKET}_PENDING` :
+            return state;
+        case `${DELETE_FROM_BASKET}_FULFILLED` :
+            return state;
+        case `${DELETE_FROM_BASKET}_REJECTED` :
+            return state = state -1;
         default:
             return state;
     }
