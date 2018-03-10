@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import './Market.css'
 import { connect } from 'react-redux';
 import { bindActionCreators} from 'redux';
-import {GetProducts, GetProduct} from '../../Redux/Actions/action';
+import {getProducts, getProduct, addToBasket} from '../../Redux/Actions/action';
 import Header from '../Header/Header'
 import{Link} from 'react-router-dom';
+import AddToBasket from '../Common/AddToBasket';
+import DeleteFromBasket from '../Common/DeleteFromBasket';
 
 class Market extends Component {
     constructor(props){
@@ -14,7 +16,7 @@ class Market extends Component {
         }
     }
     componentDidMount(){
-        this.props.GetProducts()
+        this.props.getProducts()
         .then(()=>{
             this.setState({
                 isLoaded:true,
@@ -23,17 +25,18 @@ class Market extends Component {
     }
     render(){
         const items = this.props.products.map((product)=>{
-            return ( 
+            return (
             <div className="item-container" key={product.product_id}>
                 <Link to="/details">
-                    <div onClick={ ()=>{this.props.GetProduct(product)}}>
+                    <div onClick={ ()=>{this.props.getProduct(product)}}>
                         <div className="item-image" style={{backgroundImage: "url(" + product.img+ ")"}}/>
                         <p>{product.price}</p>
                         <p>{product.description}</p>
                     </div>
                 </Link>
-                <button>ADD TO CART</button>
-            </div> 
+                <AddToBasket productId = {product.product_id} userId = '1' />
+                <DeleteFromBasket productId = {product.product_id} userId = '1'  />
+            </div>
             )
         })
         if(this.state.isLoaded){
@@ -43,7 +46,7 @@ class Market extends Component {
                     <div className="market-container">
                         <h1>Market</h1>
                         <div className="itemContainer">
-                        {items} 
+                        {items}
                         </div>
                     </div>
                 </div>
@@ -51,8 +54,8 @@ class Market extends Component {
         }else{
             return(<div>
                 <Header showCart={true}/>
-               <div className="loading">Loading...</div> 
-                
+               <div className="loading">Loading...</div>
+
                 </div>);
         }
     }
@@ -62,7 +65,7 @@ function mapStateToProps({products}){
 	return {products};
 }
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({GetProducts, GetProduct}, dispatch);
+	return bindActionCreators({getProducts, getProduct, addToBasket}, dispatch);
 }
-  
+
 export default connect(mapStateToProps, mapDispatchToProps)(Market);
