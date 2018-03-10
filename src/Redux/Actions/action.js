@@ -21,3 +21,6 @@ export function GetProduct(item){
         payload: item
     }
 }
+export function GetBasket(){
+   return axios.get(`/api/basket`);
+}
