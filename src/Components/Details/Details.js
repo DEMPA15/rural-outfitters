@@ -11,6 +11,7 @@ class Details extends Component {
     render(){
         return (
             <div>
+<<<<<<< HEAD
                <Header showCart={true}/> 
                 <div className="productItem">
                     <h1 className="item-name">{this.props.product.name}</h1>
@@ -19,6 +20,19 @@ class Details extends Component {
                     <p className="pricingBlock">{'$'}{this.props.product.price}</p>                  
                     <p className="productContent">{this.props.product.description}</p>
                     <p>{this.props.product.specs}</p>
+=======
+               <Header showCart={true}/>
+               <h1 className="detail-header">{this.props.product.name}</h1>
+                <div className="detailContainer">
+                    {/* <h1 className="detail-header">{this.props.product.name}</h1> */}
+                    <div className="detail-image" style={{backgroundImage: `url("${this.props.product.img}")`}}/>
+                    <div className="description-box">
+                    <p className="addToBasket">Add To Basket</p>
+                    <p className="detail-description">Price: &#36;{this.props.product.price}</p>
+                    <p className="detail-description">Details: {this.props.product.description}</p>
+                    <p className="detail-description">Specs: {this.props.product.specs}</p>
+                    </div>
+>>>>>>> 4f6db8e28f5bf3f72cc079bd13e8b110ce3001a1
                 </div>
             </div>
         )
