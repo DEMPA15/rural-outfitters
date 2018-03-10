@@ -84,6 +84,109 @@ app.get('/api/items/:id', (req, res) => {
         .catch(handleDbError(res));
 });
 
+app.get('/api/basket', (req, res) => {
+    const userId = 1;
+    
+    req.db.basket.find({ userId })
+        .then(basket => {
+            res.send(basket
+                .map(p => {
+                    return Object.keys(p)
+                        .reduce((item, k) => {
+                            const isProduct = k.includes('product');
+                            
+                            if (isProduct) {
+                                const { product } = item;
+                                
+                                return {
+                                    ...item,
+                                    product: {
+                                        ...product,
+                                        [k.split('_').slice(1).join('_')]: p[k],
+                                    },
+                                };
+                            }
+                            
+                            const value = p[k] instanceof Date ?
+                                `${
+                                    p[k].getFullYear()
+                                }-${
+                                    p[k].getMonth() < 9 ? '0' : ''}${p[k].getMonth() + 1
+                                }-${
+                                    p[k].getDate() < 10 ? '0' + p[k].getDate() : p[k].getDate()
+                                }` :
+                                p[k];
+                            
+                            return {
+                                ...item,
+                                [k]: value,
+                            };
+                        }, { product: {} });
+                })
+            );
+        })
+        .catch(handleDbError(res));
+});
+
+app.post('/api/basket', (req, res) => {
+    const { productId, quantity = 1 } = req.body;
+    
+    const userId = 1;
+    
+    req.db.basket.findByProductId({ userId, productId })
+        .then(products => {
+            if (products.length) {
+                const [ product ] = products;
+                
+                return req.db.basket.update({
+                    userId,
+                    productId: product.product_id,
+                    quantity: product.quantity + quantity,
+                });
+            }
+            
+            return req.db.basket.insert({
+                userId,
+                productId,
+                quantity,
+                date:  new Date(),
+            });
+        })
+        .then(() => req.db.basket.getBasketCount({ userId }))
+        .then(([ count ]) => res.send(count))
+        .catch(handleDbError(res));
+});
+
+app.delete('/api/basket', (req, res) => {
+    const { productId } = req.body;
+    
+    const userId = 1;
+    
+    req.db.basket.deleteItem({ userId, productId })
+        .then(() => req.db.basket.getBasketCount({ userId }))
+        .then(([ count ]) => res.send(count))
+        .catch(handleDbError(res));
+});
+
+app.get('/api/basket-count', (req, res) => {
+    const userId = 1;
+    
+    req.db.basket.getBasketCount({ userId })
+        .then(([ count ]) => res.send(count))
+        .catch(handleDbError(res));
+});
+
+app.patch('/api/basket/:productId', (req, res) => {
+    const { quantity } = req.body;
+    const { productId } = req.params;
+    const userId = 1;
+    
+    req.db.basket.update({ quantity, productId, userId })
+        .then(() => req.db.basket.getBasketCount({ userId }))
+        .then(([ count ]) => res.send(count))
+        .catch(handleDbError(res));
+});
+
 //#region hidden stuff
 
 
@@ -125,5 +228,6 @@ function handleDbError(res) {
         if (err.code == '22P02') {
             res.status(422).send({ message: 'The request had incorrect or missing properties: ' + err.message });
         }
+        res.status(500).send({ message: 'Internal Server Error' })
     };
 }
