@@ -25,14 +25,15 @@ class Market extends Component {
         const items = this.props.products.map((product)=>{
             return ( 
             <div className="item-container" key={product.product_id}>
+                        <div className="item-image" style={{backgroundImage: "url(" + product.img+ ")"}}/>
                 <Link to="/details">
                     <div onClick={ ()=>{this.props.GetProduct(product)}}>
-                        <div className="item-image" style={{backgroundImage: "url(" + product.img+ ")"}}/>
-                        <p>{product.price}</p>
+                        <p>${product.price}</p>
                         <p>{product.description}</p>
                     </div>
                 </Link>
-                <button>ADD TO CART</button>
+                <br></br>
+                <button className='market-button'>ADD TO CART</button>
             </div> 
             )
         })

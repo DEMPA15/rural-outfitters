@@ -5,3 +5,20 @@
     color: grey;
     font-family: Arial, Helvetica, sans-serif;
 }
+.item-container{
+    display: inline-flex;
+    margin: 20px;
+    padding: 20px;
+    border: solid 1px black;
+    width: 40%;
+    justify-content: space-evenly;
+    color: black;
+}
+p {
+    color: black;
+    text-align: left;
+}
+button.market-button {
+    margin-top: 61px;
+    font-size: 10px;
+}
