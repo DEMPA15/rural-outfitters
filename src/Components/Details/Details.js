@@ -9,13 +9,17 @@ class Details extends Component {
     render(){
         return (
             <div>
-               <Header showCart={true}/> 
-                <div>
-                    <h1>{this.props.product.name}</h1>
-                    <div className="item-image" style={{backgroundImage: `url("${this.props.product.img}")`}}/>  
-                    <p>{this.props.product.price}</p>                  
-                    <p>{this.props.product.description}</p>
-                    <p>{this.props.product.specs}</p>
+               <Header showCart={true}/>
+               <h1 className="detail-header">{this.props.product.name}</h1>
+                <div className="detailContainer">
+                    {/* <h1 className="detail-header">{this.props.product.name}</h1> */}
+                    <div className="detail-image" style={{backgroundImage: `url("${this.props.product.img}")`}}/>
+                    <div className="description-box">
+                    <p className="addToBasket">Add To Basket</p>
+                    <p className="detail-description">Price: &#36;{this.props.product.price}</p>
+                    <p className="detail-description">Details: {this.props.product.description}</p>
+                    <p className="detail-description">Specs: {this.props.product.specs}</p>
+                    </div>
                 </div>
             </div>
         )
