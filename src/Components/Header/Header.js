@@ -9,8 +9,9 @@ class Header extends Component {
         if(this.props.showCart){
             return (
                 <div className="Header">
-                <Link to='/market'>
-                    RURAL OUTFITTERS
+
+                    <Link className='homeButton' to={`/market`}>
+                        RURAL OUTFITTERS
                     </Link>
                     <Link to={'/basket'}>
                         <div className="shoppingBag" style={{backgroundImage: "url(" + shoppingCart+ ")"}}>
@@ -24,7 +25,9 @@ class Header extends Component {
         }
         return (
             <div className="Header">
-                RURAL OUTFITTERS
+
+                    RURAL OUTFITTERS
+
             </div>
         )
     }
