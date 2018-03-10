@@ -30,8 +30,8 @@
     justify-content: center;
     margin: 35px;
     background-color: rgba(233, 230, 230, 0.8);
-    height: 570px;
-    width: 630px;
+    height: 460px;
+    width: 530px;
     font-size: 1.4em;
     
 }
@@ -51,25 +51,25 @@
     font-size: 1.7em;
     letter-spacing: .1em;
     margin-bottom: 0px;
-    margin-top: 0px;
+    margin-top: 5px;
 }
 
 .item-container .description{
     margin-top: 10px;
-    margin-bottom: 35px;
+    margin-bottom: 20px;
 }
 
 .item-container button{
-    padding: 15px;
+    padding: 12px;
     border-radius: 5px;
     font-weight: bold;
-    font-size: 1em;
+    font-size: .8em;
     background-color: rgb(127, 175, 108);
 }
 
 .item-image{
-    height: 280px;
-    width: 280px;
+    height: 200px;
+    width: 200px;
     margin: 10px;
     background-image: url('https://vignette.wikia.nocookie.net/stranded-deep/images/0/01/Hoe_Crude_Icon.png/revision/latest?cb=20171001235136')
 }
