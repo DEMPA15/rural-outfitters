@@ -12,7 +12,7 @@ class Details extends Component {
                <Header showCart={true}/> 
                 <div>
                     <h1>{this.props.product.name}</h1>
-                    <div className="item-image" style={{backgroundImage: `url("${this.props.product.img}")`}}/>  
+                    <img className="item-image" src = {this.props.product.img} alt={this.props.product.name} />  
                     <p>{this.props.product.price}</p>                  
                     <p>{this.props.product.description}</p>
                     <p>{this.props.product.specs}</p>
