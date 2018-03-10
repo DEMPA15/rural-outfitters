@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Market.css'
 import { connect } from 'react-redux';
 import { bindActionCreators} from 'redux';
-import {GetProducts, GetProduct} from '../../Redux/Actions/action';
+import {getProducts, getProduct} from '../../Redux/Actions/action';
 import Header from '../Header/Header';
 import{Link} from 'react-router-dom';
 import Loading from '../Loading/Loading';
@@ -29,7 +29,7 @@ class Market extends Component {
             return (
             <div className="item-container" key={product.product_id}>
                 <Link to="/details">
-                    <div onClick={ ()=>{this.props.GetProduct(product)}}>
+                    <div onClick={ ()=>{this.props.getProduct(product)}}>
                         <p className='name'>{product.name}</p>
                         <div className="item-image" 
                             style={{backgroundImage: "url(" + product.img+ ")"}}
