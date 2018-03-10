@@ -6,19 +6,15 @@ import {deleteFromBasket} from '../../Redux/Actions/action';
 class DeleteFromBasket extends Component{
 
   render(){
-    const { deleteFromBasket, productId, userId } = this.props
+    const { deleteFromBasket, productId } = this.props
     return(
-      <button className="addToCart-Button" onClick={() => deleteFromBasket(productId, userId)}>Delete Item</button>
+      <button className="addToBasket-Button" onClick={() => deleteFromBasket(productId)}>Delete Item</button>
     )
   }
 }
 
-
-function mapStateToProps({products}){
-	return {products};
-}
 function mapDispatchToProps(dispatch){
 	return bindActionCreators({ deleteFromBasket}, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DeleteFromBasket);
+export default connect(state => state,mapDispatchToProps)(DeleteFromBasket);

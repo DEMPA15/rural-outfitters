@@ -1,24 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators} from 'redux';
-import { addToBasket} from '../../Redux/Actions/action';
+import { addToBasket } from '../../Redux/Actions/action';
 
 class AddToBasket extends Component{
 
   render(){
-    const { addToBasket, productId, userId } = this.props
+    const { addToBasket, productId } = this.props
     return(
-      <button className="addToBasket-Button" onClick={() => addToBasket(productId, userId)}>ADD TO CART</button>
+      <button className="addToBasket-Button" onClick={() => addToBasket(productId)}>add to basket</button>
     )
   }
 }
 
-
-function mapStateToProps({products}){
-	return {products};
-}
 function mapDispatchToProps(dispatch){
 	return bindActionCreators({addToBasket}, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddToBasket);
+export default connect(state => state,mapDispatchToProps)(AddToBasket);

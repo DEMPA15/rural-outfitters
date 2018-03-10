@@ -1,8 +1,8 @@
 import {GET_PRODUCT, GET_PRODUCTS, ADD_TO_BASKET, DELETE_FROM_BASKET} from '../Actions/constraints';
 import axios from 'axios'
 
-export function addToBasket(userId, productId){
-    const payload = axios.post(`/api/basket`, { userId, productId })
+export function addToBasket(productId){
+    const payload = axios.post(`/api/basket`, { productId })
         .then(({ data }) => data)
     return {
         type: ADD_TO_BASKET,
@@ -10,15 +10,14 @@ export function addToBasket(userId, productId){
     }
 }
 
-export function deleteFromBasket(userId, productId){
-    const payload = axios.delete(`/api/basket`, { userId, productId })
+export function deleteFromBasket(productId){
+    const payload = axios.delete(`/api/basket`, { productId })
         .then(({ data }) => data)
     return {
         type: DELETE_FROM_BASKET,
         payload
     }
 }
-
 
 export function getProducts(){
    const payload = axios.get('/api/items');

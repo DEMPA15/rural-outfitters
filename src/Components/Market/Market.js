@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Market.css'
 import { connect } from 'react-redux';
 import { bindActionCreators} from 'redux';
-import {getProducts, getProduct, addToBasket} from '../../Redux/Actions/action';
+import {getProducts, getProduct} from '../../Redux/Actions/action';
 import Header from '../Header/Header'
 import{Link} from 'react-router-dom';
 import AddToBasket from '../Common/AddToBasket';
@@ -34,8 +34,8 @@ class Market extends Component {
                         <p>{product.description}</p>
                     </div>
                 </Link>
-                <AddToBasket productId = {product.product_id} userId = '1' />
-                <DeleteFromBasket productId = {product.product_id} userId = '1'  />
+                <AddToBasket productId = {product.product_id} />
+                <DeleteFromBasket productId = {product.product_id} />
             </div>
             )
         })
@@ -65,7 +65,7 @@ function mapStateToProps({products}){
 	return {products};
 }
 function mapDispatchToProps(dispatch){
-	return bindActionCreators({getProducts, getProduct, addToBasket}, dispatch);
+	return bindActionCreators({getProducts, getProduct}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Market);

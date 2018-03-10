@@ -6,7 +6,7 @@ class Basket extends Component {
     render(){
         return (
             <div>
-                <Header showCart={true}/>
+                <Header showCart ={true}/>
                 Basket
             </div>
         )
