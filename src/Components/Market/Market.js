@@ -39,7 +39,6 @@ class Market extends Component {
                     </div>
                 </Link>
                 <AddToBasket productId = {product.product_id} />
-                <DeleteFromBasket productId = {product.product_id} />
             </div> 
 
 

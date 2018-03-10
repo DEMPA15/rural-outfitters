@@ -8,7 +8,7 @@ class AddToBasket extends Component{
   render(){
     const { addToBasket, productId } = this.props
     return(
-      <button className="addToBasket-Button" onClick={() => addToBasket(productId)}>add to basket</button>
+      <button className="addToBasket-Button" onClick={() => addToBasket(productId)}>ADD TO BASKET</button>
     )
   }
 }
