@@ -18,6 +18,7 @@
     "cors": "^2.8.4",
     "dotenv": "^5.0.1",
     "express": "^4.16.2",
+    "express-session": "^1.15.6",
     "massive": "^4.7.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",

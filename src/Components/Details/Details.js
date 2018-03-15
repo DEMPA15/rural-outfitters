@@ -14,10 +14,10 @@ class Details extends Component {
                 <div className="detailContainer">
                     <div className="detail-image" style={{backgroundImage: `url("${this.props.product.img}")`}}/>
                     <div className="description-box">
-                    <p className="addToBasket">Add To Basket</p>
-                    <p className="detail-description">Price: &#36;{this.props.product.price}</p>
-                    <p className="detail-description">Details: {this.props.product.description}</p>
-                    <p className="detail-description">Specs: {this.props.product.specs}</p>
+                        <p className="addToBasket">Add To Basket</p>
+                        <p className="detail-description">Price: &#36;{this.props.product.price}</p>
+                        <p className="detail-description">Details: {this.props.product.description}</p>
+                        <p className="detail-description">Specs: {this.props.product.specs}</p>
                     </div>
                 </div>
             </div>

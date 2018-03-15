@@ -1,8 +1,9 @@
 const path = require('path');
-const express = require('express')
-const cors = require('cors')
-const bodyParser = require('body-parser')
-const massive = require('massive')
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const massive = require('massive');
 
 require('dotenv').config();
 
@@ -20,24 +21,22 @@ massive(process.env.CONNECTION_STRING)
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(session({
+    name: 'rural-outfitters',
+    secret: process.env.SESSION_SECRET, // {userId: 1} => apowienpafosdihvpoaiwnpeiruhpasokmv287394erijf
+                                        // apowienpafosdihvpoaiwnpeiruhpasokmv287394erijf => {userId: 1}
+    cookie: {
+        expires: 604800,
+    },
+    rolling: true,
+    resave: false,
+}));
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-function checkDb() {
-    return (req, res, next) => {
-        const db = app.get('db');
-        
-        if (db) {
-            req.db = db;
-            next();
-        }
-        else {
-            res.status(500).send({ message: 'this died' });
-        }
-    };
-}
-
 app.use(checkDb());
+
+
 //#region alternative solution
 // app.use((req, res, next) => {
 //     const db = app.get('db');
@@ -51,6 +50,33 @@ app.use(checkDb());
 //     }
 // });
 //#endregion
+
+
+//#region routes
+app.post('/api/login', (req, res) => {
+    const { email, password } = req.body;
+    
+    req.db.user_table.findOne({ email, password })
+        .then(user => {
+            if (!user) {
+                return res.status(401).send({ message: 'Invalid username or password' });
+            }
+            
+            res.send({ success: true, message: 'Logged in successfully' });
+        })
+        .catch(handleDbError(res));
+});
+
+app.post('/api/register', (req, res) => {
+    const { email, password } = req.body;
+    
+    req.db.user_table.insert({ email, password })
+        .then(user => {
+            req.session.user = user.id;
+            res.send({ success: true, message: 'logged in successfully' });
+        })
+        .catch(handleDbError(res));
+});
 
 app.get('/api/items', (req, res) => {
     req.db.product.find()
@@ -186,8 +212,10 @@ app.patch('/api/basket/:productId', (req, res) => {
         .then(([ count ]) => res.send(count))
         .catch(handleDbError(res));
 });
+//#endregion routes
 
-//#region hidden stuff
+
+//#region start listening
 
 
 const port = process.env.PORT || 5000;
@@ -197,6 +225,8 @@ app.listen(port, ()=>{
 
 //#endregion
 
+
+//#region define middleware
 function validateProduct() {
     return (req, res, next) => {
         if (!req.body.price || typeof req.body.price != 'number' || req.body.price <= 0) {
@@ -217,6 +247,22 @@ function validateProduct() {
     };
 }
 
+function checkDb() {
+    return (req, res, next) => {
+        const db = app.get('db');
+        
+        if (db) {
+            req.db = db;
+            next();
+        }
+        else {
+            res.status(500).send({ message: 'this died' });
+        }
+    };
+}
+//#endregion define middleware
+
+//#region error handlers
 function handleDbError(res) {
     return (err) => {
         console.warn('hit a snag');
@@ -231,3 +277,4 @@ function handleDbError(res) {
         res.status(500).send({ message: 'Internal Server Error' })
     };
 }
+//#endregion error handlers
