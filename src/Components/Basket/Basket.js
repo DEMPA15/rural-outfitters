@@ -93,4 +93,4 @@ function mapDispatchToProps(dispatch){
 	return bindActionCreators({deleteFromBasket}, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(Basket);
+export default connect(state => state, mapDispatchToProps)(Basket);

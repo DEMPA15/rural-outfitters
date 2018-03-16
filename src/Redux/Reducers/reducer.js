@@ -3,6 +3,7 @@ import {GET_PRODUCT, GET_PRODUCTS, ADD_TO_BASKET, DELETE_FROM_BASKET, GET_BASKET
 import { AddToBasket } from '../Actions/action';
 let lastProduct = JSON.parse(localStorage.getItem('lastProduct')) || {};
 
+
 function basket (state = 0, action){
     switch(action.type){
         case `${ADD_TO_BASKET}_PENDING` :
