@@ -26,8 +26,10 @@ app.use(session({
     secret: process.env.SESSION_SECRET, // {userId: 1} => apowienpafosdihvpoaiwnpeiruhpasokmv287394erijf
                                         // apowienpafosdihvpoaiwnpeiruhpasokmv287394erijf => {userId: 1}
     cookie: {
-        expires: 604800,
+        //days hours minutes seconds milseconds
+        expires:  5 * 24 * 60 * 60 *1000,
     },
+    saveUninitialized: false,
     rolling: true,
     resave: false,
 }));
@@ -59,9 +61,9 @@ app.post('/api/login', (req, res) => {
     req.db.user_table.findOne({ email, password })
         .then(user => {
             if (!user) {
-                return res.status(401).send({ message: 'Invalid username or password' });
+                return res.status(401).send({ success: false, message: 'it didnt work' });
             }
-            
+            req.session.user = user.user_id;
             res.send({ success: true, message: 'Logged in successfully' });
         })
         .catch(handleDbError(res));
@@ -72,7 +74,8 @@ app.post('/api/register', (req, res) => {
     
     req.db.user_table.insert({ email, password })
         .then(user => {
-            req.session.user = user.id;
+            req.session.user = user.user_id;
+            console.log(req.session.user)
             res.send({ success: true, message: 'logged in successfully' });
         })
         .catch(handleDbError(res));
@@ -111,9 +114,7 @@ app.get('/api/items/:id', (req, res) => {
 });
 
 app.get('/api/basket', (req, res) => {
-    const userId = 1;
-    
-    req.db.basket.find({ userId })
+    req.db.basket.find({ userId:req.session.user })
         .then(basket => {
             res.send(basket
                 .map(p => {
@@ -157,7 +158,7 @@ app.get('/api/basket', (req, res) => {
 app.post('/api/basket', (req, res) => {
     const { productId, quantity = 1 } = req.body;
     
-    const userId = 1;
+    const userId = req.session.user;
     
     req.db.basket.findByProductId({ userId, productId })
         .then(products => {
@@ -186,7 +187,7 @@ app.post('/api/basket', (req, res) => {
 app.delete('/api/basket/:productId', (req, res) => {
     const { productId } = req.params;
     
-    const userId = 1;
+    const userId = req.session.user;
     
     req.db.basket.deleteItem({ userId, productId })
         .then(() => req.db.basket.getBasketCount({ userId }))
@@ -195,7 +196,7 @@ app.delete('/api/basket/:productId', (req, res) => {
 });
 
 app.get('/api/basket-count', (req, res) => {
-    const userId = 1;
+    const userId = req.session.user;
     
     req.db.basket.getBasketCount({ userId })
         .then(([ count ]) => res.send(count))
@@ -205,7 +206,7 @@ app.get('/api/basket-count', (req, res) => {
 app.patch('/api/basket/:productId', (req, res) => {
     const { quantity } = req.body;
     const { productId } = req.params;
-    const userId = 1;
+    const userId = req.session.user;
     
     req.db.basket.update({ quantity, productId, userId })
         .then(() => req.db.basket.getBasketCount({ userId }))
