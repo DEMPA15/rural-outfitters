@@ -4,6 +4,10 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const massive = require('massive');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
+const bcrypt = require('bcrypt');
 
 require('dotenv').config();
 
@@ -19,6 +23,83 @@ massive(process.env.CONNECTION_STRING)
         console.error(err);
     });
 
+passport.use('login', new LocalStrategy({
+    usernameField: 'email', // req.body.email != req.body.username
+    passReqToCallback: true,
+}, (req, email, password, done) => {
+    req.db.user_table.findOne({ email })
+        .then(user => {
+            if (!user || !bcrypt.compareSync(password, user.password)) {
+                return done('Invalid email or password');
+            }
+            
+            delete user.password;
+            
+            done(null, user);
+        })
+        .catch(err => {
+            done(err);
+        });
+}));
+
+passport.use('register', new LocalStrategy({
+    usernameField: 'email', // req.body.email != req.body.username
+    passReqToCallback: true,
+}, (req, email, password, done) => {
+    if (!email || !password) {
+        return done('Email and password are required');
+    }
+    
+    password = bcrypt.hashSync(password, bcrypt.genSaltSync(15));
+    
+    req.db.user_table.insert({ email, password })
+        .then(user => {
+            delete user.password;
+            
+            done(null, user);
+        })
+        .catch(err => done(err));
+}));
+
+// This isn't successfully implemented yet. Requires https
+// passport.use(new FacebookStrategy({
+//     passReqToCallback: true,
+//     clientID: process.env.FB_APP_ID,
+//     clientSecret: process.env.FB_APP_SECRET,
+//     callbackURL: 'https://5cfefb3f.ngrok.io/login/facebook/callback',
+// }, (req, accessToken, refreshToken, profile, done) => {
+//     console.log(profile);
+// }));
+
+passport.serializeUser((user, done) => {
+    if (!user) {
+        done('No user');
+    }
+    
+    done(null, user.user_id);
+});
+
+passport.deserializeUser((id, done) => {
+    const db = app.get('db');
+    
+    if (!db) {
+        return done('Internal Server Error');
+    }
+    
+    db.user_table.findOne({ user_id: id })
+        .then(user => {
+            if (!user) {
+                return done(null, false);
+            }
+            
+            delete user.password;
+            
+            done(null, user);
+        })
+        .catch(err => done(err));
+});
+
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(session({
@@ -33,6 +114,8 @@ app.use(session({
     rolling: true,
     resave: false,
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 
@@ -55,31 +138,29 @@ app.use(checkDb());
 
 
 //#region routes
-app.post('/api/login', (req, res) => {
-    const { email, password } = req.body;
-    
-    req.db.user_table.findOne({ email, password })
-        .then(user => {
-            if (!user) {
-                return res.status(401).send({ success: false, message: 'it didnt work' });
-            }
-            req.session.user = user.user_id;
-            res.send({ success: true, message: 'Logged in successfully' });
-        })
-        .catch(handleDbError(res));
+app.post('/api/login', passport.authenticate(['login']), (req, res) => {
+    res.send({
+        message: 'Welcome to the Jungle!',
+        user: req.user,
+    });
 });
 
-app.post('/api/register', (req, res) => {
-    const { email, password } = req.body;
-    
-    req.db.user_table.insert({ email, password })
-        .then(user => {
-            req.session.user = user.user_id;
-            console.log(req.session.user)
-            res.send({ success: true, message: 'logged in successfully' });
-        })
-        .catch(handleDbError(res));
+app.post('/api/register', passport.authenticate('register'), (req, res) => {
+    res.send({
+        message: 'Success!',
+        user: req.user,
+    })
 });
+
+// app.get('/login/facebook', passport.authenticate('facebook'));
+
+// app.get(
+//     '/login/facebook/callback',
+//     passport.authenticate('facebook', {
+//         successRedirect: '/market',
+//         failureRedirect: '/login'
+//     }),
+// );
 
 app.get('/api/items', (req, res) => {
     req.db.product.find()
