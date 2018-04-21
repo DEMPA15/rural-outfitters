@@ -15,7 +15,7 @@ class Login extends Component {
 
     createUserOrLogin(e, login){
         e.preventDefault();
-        axios.post(`/api/${login}`, {email:this.state.email, password:this.state.password})
+        axios.post(`/auth/${login}`, {email:this.state.email, password:this.state.password})
             .then((response)=>{
                 if(response.data.success){
                     this.props.history.push('/market');
