@@ -14,6 +14,7 @@ class Login extends Component {
     }
 
     createUserOrLogin(e, login){
+        debugger
         e.preventDefault();
         axios.post(`/api/${login}`, {email:this.state.email, password:this.state.password})
             .then((response)=>{

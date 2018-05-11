@@ -21,7 +21,7 @@ class App extends Component {
             <Route path={`/market`} component={Market} />
             <Route path={`/details`} component={Details} />
             <Route path={`/basket`} component={Basket} />
-            <Route path={`/login`} component={Login} />
+            <Route path={`/`} component={Login} />
           </Switch>
         </Router>
       </div>
